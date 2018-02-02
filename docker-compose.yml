@@ -1,6 +1,6 @@
 version: "2"
 services:
-  databus:
+  lochat:
     build:
       context: .
     restart: always
