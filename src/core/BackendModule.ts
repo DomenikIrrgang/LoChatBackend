@@ -1,7 +1,4 @@
 export interface BackendModule {
-    init(): void;
-    onServerReady(): void;
-    onServerShutdown(): void;
-    onServerStart(): void;
-    onServerRestart(): void;
+    init(callback?: (module: BackendModule) => void): void;
+    getName(): string;
 }

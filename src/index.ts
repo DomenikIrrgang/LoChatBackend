@@ -1,5 +1,6 @@
 import * as Sequelize from "sequelize";
 import { setConfig, config } from "./config/Config";
+import { Backend } from "./core/Backend";
 
 if (process.env.NODE_ENV) {
   setConfig(process.env.NODE_ENV);
@@ -27,4 +28,4 @@ databaseInstance
     console.error("Unable to connect to the database:", error);
   });
 
-console.log("Hello World, I am LoChat. Im am running in " + config.environment + " mode.");
+Backend.getInstance().init();
