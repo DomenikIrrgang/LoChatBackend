@@ -14,8 +14,6 @@ services:
     build:
       context: ./database
     restart: always
-    ports:
-      - "127.0.0.1:5432:5432"
     environment:
       POSTGRES_USER: "lochat"
       POSTGRES_PASSWORD: 85858585
