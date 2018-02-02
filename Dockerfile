@@ -1,5 +1,5 @@
 FROM node:carbon
-WORKDIR /usr/src/lochatbackend
+WORKDIR /usr/src/LoChatBackend
 COPY package*.json ./
 COPY tsconfig.json ./
 RUN npm install
