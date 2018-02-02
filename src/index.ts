@@ -1,2 +1,23 @@
+import * as Sequelize from "sequelize";
+let databaseInstance = new Sequelize("lochat", "lochat", "85858585", {
+  host: "127.0.0.1",
+  dialect: "postgres",
+  pool: {
+    max: 5,
+    min: 0,
+    acquire: 30000,
+    idle: 10000,
+  },
+});
 
-console.log("Hello World, I am LoChat. Im am running in " + process.env.NODE_ENV + " mode. ABCENV = " + process.env.ABCENV);
+databaseInstance
+  .authenticate()
+  .then(() => {
+    console.log("Connection has been established successfully.");
+  })
+  .catch((err) => {
+    console.error("Unable to connect to the database:", err);
+  });
+
+console.log("test");
+console.log("Hello World, I am LoChat. Im am running in " + process.env.NODE_ENV + " mode.");
