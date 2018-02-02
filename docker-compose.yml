@@ -10,11 +10,13 @@ services:
       - "127.0.0.1:8080:8080"
     depends_on:
       - postgres
+    links:
+      - postgres
   postgres:
     build:
       context: ./database
     restart: always
-    port:
+    ports:
       - "127.0.0.1:5432:5432"
     environment:
       POSTGRES_USER: "lochat"
