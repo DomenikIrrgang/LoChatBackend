@@ -6,8 +6,12 @@ services:
     restart: always
     environment:
       NODE_ENV: "production"
+      DB_HOST: "postgres"
+      DB_PORT: "5432"
+      DB_USER: "lochat"
+      DB_PASSWORD: 85858585
     ports:
-      - "127.0.0.1:8080:8080"
+      - "8080:8080"
     depends_on:
       - postgres
     links:
@@ -15,6 +19,8 @@ services:
   postgres:
     image: postgres
     restart: always
+    ports:
+      - "5432:5432"
     environment:
       POSTGRES_USER: "lochat"
       POSTGRES_PASSWORD: 85858585

@@ -1,6 +1,14 @@
 import * as Sequelize from "sequelize";
-let databaseInstance = new Sequelize("lochat", "postgres", "85858585", {
-  host: "127.0.0.1",
+import { setConfig, config } from "./config/Config";
+
+if (process.env.NODE_ENV) {
+  setConfig(process.env.NODE_ENV);
+} else {
+  setConfig("development");
+}
+
+let databaseInstance: Sequelize.Sequelize = new Sequelize(config.database.name, config.database.user, config.database.password, {
+  host: config.database.host,
   dialect: "postgres",
   pool: {
     max: 5,
@@ -15,8 +23,8 @@ databaseInstance
   .then(() => {
     console.log("Connection has been established successfully.");
   })
-  .catch((err) => {
-    console.error("Unable to connect to the database:", err);
+  .catch((error) => {
+    console.error("Unable to connect to the database:", error);
   });
 
-console.log("Hello World, I am LoChat. Im am running in " + process.env.NODE_ENV + " mode.");
+console.log("Hello World, I am LoChat. Im am running in " + config.environment + " mode.");
