@@ -1,7 +1,7 @@
 import { BackendModule } from "./BackendModule";
 import { config } from "../config/Config";
 import { LogLevel } from "../logging/LogLevel";
-import { Express } from "express";
+import { Express, Request, Response } from "express";
 import * as express from "express";
 import * as cookieParser from "cookie-parser";
 import * as bodyParser from "body-parser";
@@ -46,6 +46,9 @@ export class Backend {
 
     private constructor() { }
 
+    /**
+     * Initializes and starts the server.
+     */
     public init(): void {
         config.app.logger.log(LogLevel.INFO, "Backend is running in " + config.environment + " mode.");
         config.app.logger.log(LogLevel.INFO, "Starting initialization...");
@@ -86,6 +89,9 @@ export class Backend {
                 config.app.logger.log(LogLevel.ERROR, error);
             } else {
                 config.app.logger.log(LogLevel.INFO, `Server is listening on ${config.app.port}`);
+                this.express.get("/test", (request: Request, response: Response) => {
+                    response.send({ message: "Hello World!"});
+                });
             }
         });
     }
