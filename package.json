@@ -1,0 +1,26 @@
+{
+  "name": "lochatbackend",
+  "version": "0.0.1",
+  "description": "Backend of LoChat.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DomenikIrrgang/LoChatBackend.git"
+  },
+  "author": "Domenik Irrgang",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/DomenikIrrgang/LoChatBackend/issues"
+  },
+  "homepage": "https://github.com/DomenikIrrgang/LoChatBackend#readme",
+  "dependencies": {
+    "typescript": "^2.7.1"
+  },
+  "devDependencies": {
+    "tslint": "^5.9.1",
+    "typedoc": "^0.10.0"
+  }
+}
