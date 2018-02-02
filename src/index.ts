@@ -1,6 +1,6 @@
 import * as Sequelize from "sequelize";
-let databaseInstance = new Sequelize("lochat", "lochat", "85858585", {
-  host: "0.0.0.0",
+let databaseInstance = new Sequelize("lochat", "postgres", "85858585", {
+  host: "127.0.0.1",
   dialect: "postgres",
   pool: {
     max: 5,
