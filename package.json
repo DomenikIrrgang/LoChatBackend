@@ -24,6 +24,7 @@
     "typescript": "^2.7.1"
   },
   "devDependencies": {
+    "@types/sequelize": "^4.27.4",
     "tslint": "^5.9.1",
     "typedoc": "^0.10.0"
   }
