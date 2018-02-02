@@ -19,6 +19,8 @@
   },
   "homepage": "https://github.com/DomenikIrrgang/LoChatBackend#readme",
   "dependencies": {
+    "pg": "^6.4.2",
+    "sequelize": "^4.32.3",
     "typescript": "^2.7.1"
   },
   "devDependencies": {
