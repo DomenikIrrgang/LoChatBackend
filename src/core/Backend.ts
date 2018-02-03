@@ -108,7 +108,15 @@ export class Backend {
                 });
                 this.express.get("/createuser", (request: Request, response: Response) => {
                     let user = Database.getInstance().getModel("users");
-                    user.create({ name: "Domenik", age: 24 } ).then((result) => {
+                    user.create({ name: "Domenik", age: 24 }).then((result) => {
+                        response.send(JSON.stringify(result));
+                    }).catch((reason) => {
+                        response.send(JSON.stringify(reason));
+                    });
+                });
+                this.express.get("/deleteuser", (request: Request, response: Response) => {
+                    let user = Database.getInstance().getModel("users");
+                    user.destroy({ where: { name: "Domenik" } }).then((result) => {
                         response.send(JSON.stringify(result));
                     }).catch((reason) => {
                         response.send(JSON.stringify(reason));
