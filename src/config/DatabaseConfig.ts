@@ -4,8 +4,7 @@ import { productionAppConfig } from "./AppConfig";
 import { Logger } from "../logging/Logger";
 import { ConsoleLogger } from "../logging/ConsoleLogger";
 import { Migration } from "../database/Migration";
-import { TestMigration } from "../database/migrations/TestMigration";
-
+import { UserMigration } from "../database/migrations/UserMigration";
 
 /**
  * Configuration of the database.
@@ -52,7 +51,7 @@ export class DatabaseConfig {
     public migrationsTable: string = "migrations";
 
     public migrations: Migration[] = [
-        new TestMigration(),
+        new UserMigration(),
     ];
 }
 

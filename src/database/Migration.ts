@@ -5,17 +5,36 @@
  * @version 1.0
  */
 export abstract class Migration {
-    protected production: boolean;
+    private production: boolean;
     private name: string;
 
-    protected constructor(name: string, isProduction: boolean) {
+    public constructor(name: string, production: boolean) {
         this.name = name;
-        this.production = isProduction;
+        this.production = production;
     }
 
+    /**
+     * Returns the name of the migration.
+     *
+     * @returns Name of the migration.
+     */
     public getName(): string {
         return this.name;
     }
 
+    /**
+     * Returns true if migration should be used in production.
+     *
+     * @returns True if migration should be run in production.
+     */
+    public isProduction(): boolean {
+        return this.production;
+    }
+
+    /**
+     * Run all database changes for the migration in here.
+     *
+     * @returns Promise that will finish if migration is finished.
+     */
     public abstract migrate(): Promise<void>;
 }

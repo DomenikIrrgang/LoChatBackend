@@ -1,11 +1,12 @@
 import { BackendModule } from "./BackendModule";
 import { config } from "../config/Config";
 import { LogLevel } from "../logging/LogLevel";
-import { Express, Request, Response } from "express";
+import { Express } from "express";
 import * as express from "express";
 import * as cookieParser from "cookie-parser";
 import * as bodyParser from "body-parser";
 import { Database } from "../database/Database";
+import { RouteHandler } from "../routing/RouteHandler";
 
 /**
  * The Backend class holds all references to all modules of the backend application and is
@@ -48,6 +49,11 @@ export class Backend {
      */
     private express: Express;
 
+    /**
+     * Handles the routing of the backend instance.
+     */
+    private routeHandler: RouteHandler;
+
     private constructor() { }
 
     /**
@@ -61,9 +67,21 @@ export class Backend {
                 this.initExpress();
                 this.loadAllModules();
             })
-            .catch(() => {
-                config.app.logger.log(LogLevel.INFO, "Database could not be initialized. Shuting down...");
+            .catch((reason) => {
+                config.app.logger.log(LogLevel.ERROR, "Database could not be initialized. Shuting down...");
+                if (reason) {
+                    config.app.logger.log(LogLevel.ERROR, "Reason: " + reason.toString());
+                }
             });
+    }
+
+    /**
+     * Adds a module to the backend.
+     *
+     * @param module Module to be added to the backend.
+     */
+    public addModule(module: BackendModule) {
+        this.modules.push(module);
     }
 
     private loadAllModules(): void {
@@ -77,9 +95,10 @@ export class Backend {
         }
     }
 
-    private onModuleLoaded(module: BackendModule): void {
+    private onModuleLoaded = (module: BackendModule) => {
+        this.routeHandler.applyRouterConfig(module.getRoutes());
         config.app.logger.log(LogLevel.INFO,
-            "Loaded module: " + module.getName() + ". " + this.modulesLoaded++ + "/" + this.modules.length + " modules loaded.");
+            "Loaded module: " + module.getName() + ". " + ++this.modulesLoaded + "/" + this.modules.length + " modules loaded.");
         if (this.modulesLoaded === this.modules.length) {
             config.app.logger.log(LogLevel.INFO, "All modules loaded.");
             this.startServer();
@@ -91,44 +110,17 @@ export class Backend {
         this.express = express();
         this.express.use(cookieParser());
         this.express.use(bodyParser.json());
+        this.express.use("/documentation", express.static("docs"));
+        this.routeHandler = new RouteHandler(this.express);
     }
 
     private startServer(): void {
         this.express.listen(config.app.port, (error: any) => {
             if (error) {
+                config.app.logger.log(LogLevel.ERROR, "Could not start server.");
                 config.app.logger.log(LogLevel.ERROR, error);
             } else {
                 config.app.logger.log(LogLevel.INFO, `Server is listening on ${config.app.port}`);
-                this.express.get("/users", (request: Request, response: Response) => {
-                    Database.getInstance().getModel("users").all().then((result) => {
-                        response.send(JSON.stringify(result));
-                    }).catch(() => {
-                        response.send("{}");
-                    });
-                });
-                this.express.get("/createuser", (request: Request, response: Response) => {
-                    let user = Database.getInstance().getModel("users");
-                    user.create({ name: "Domenik", age: 24 }).then((result) => {
-                        response.send(JSON.stringify(result));
-                    }).catch((reason) => {
-                        response.send(JSON.stringify(reason));
-                    });
-                });
-                this.express.get("/deleteuser", (request: Request, response: Response) => {
-                    let user = Database.getInstance().getModel("users");
-                    user.destroy({ where: { name: "Domenik" } }).then((result) => {
-                        response.send(JSON.stringify(result));
-                    }).catch((reason) => {
-                        response.send(JSON.stringify(reason));
-                    });
-                });
-                this.express.get("/migrations", (request: Request, response: Response) => {
-                    Database.getInstance().getModel("migrations").all().then((result) => {
-                        response.send(JSON.stringify(result));
-                    }).catch(() => {
-                        response.send("{}");
-                    });
-                });
             }
         });
     }

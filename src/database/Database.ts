@@ -58,9 +58,7 @@ export class Database {
                             migrationHandler.run().then(() => {
                                 this.loadModels().then(() => {
                                     resolve();
-                                }).catch(() => {
-                                    reject();
-                                });
+                                }).catch(reject);
                             }).catch(reject);
                         }).catch(reject);
                     }).catch(reject);
@@ -73,14 +71,31 @@ export class Database {
         });
     }
 
+    /**
+     * Returns the connection of the Sequelize intance.
+     *
+     * @returns Connection of the Sequelize instance.
+     */
     public getConnection(): Sequelize.Sequelize {
         return this.connection;
     }
 
+    /**
+     * Adds a model to the database.models collection.
+     *
+     * @param name Name of the model.
+     * @param model The model to be added.
+     */
     public addModel(name: string, model: any) {
         this.models[name] = model;
     }
 
+    /**
+     * Returns a model of the database for a given name.
+     *
+     * @param name Name of the requested model.
+     * @returns The model. Undefined if model does not exist.
+     */
     public getModel(name: string) {
         return this.models[name];
     }
@@ -95,6 +110,7 @@ export class Database {
                     if (reason) {
                         config.database.logger.log(LogLevel.ERROR, "Reason: " + reason.toString());
                     }
+                    reject();
                 });
             } else {
                 resolve();

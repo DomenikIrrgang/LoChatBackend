@@ -2,7 +2,13 @@ import { Migration } from "../Migration";
 import { Database } from "../Database";
 import * as Sequelize from "sequelize";
 
-export class TestMigration extends Migration {
+/**
+ * Testing migration.
+ *
+ * @author Domenik Irrgang
+ * @version 1.0
+ */
+export class UserMigration extends Migration {
 
     public constructor() {
         super("UserMigration", false);
