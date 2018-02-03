@@ -37,6 +37,7 @@ export class Database {
         config.app.logger.log(LogLevel.INFO, "Initializing database...");
         this.connection = new Sequelize(config.database.name, config.database.user, config.database.password, {
             host: config.database.host,
+            port: config.database.port,
             dialect: "postgres",
             pool: {
                 max: 5,
@@ -44,8 +45,8 @@ export class Database {
                 acquire: 30000,
                 idle: 10000,
             },
+            omitNull: true,
             logging: false,
-            port: config.database.port,
         });
 
         return new Promise<void>((resolve, reject) => {
@@ -119,6 +120,7 @@ export class Database {
                 },
                 sequelizeOptions: {
                     logging: false,
+                    omitNull: true,
                 },
             });
             sequelizeModels.getSchema().then((schema) => {

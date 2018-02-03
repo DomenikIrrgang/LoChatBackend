@@ -106,6 +106,14 @@ export class Backend {
                         response.send("{}");
                     });
                 });
+                this.express.get("/createuser", (request: Request, response: Response) => {
+                    let user = Database.getInstance().getModel("users");
+                    user.create({ name: "Domenik", age: 24 } ).then((result) => {
+                        response.send(JSON.stringify(result));
+                    }).catch((reason) => {
+                        response.send(JSON.stringify(reason));
+                    });
+                });
                 this.express.get("/migrations", (request: Request, response: Response) => {
                     Database.getInstance().getModel("migrations").all().then((result) => {
                         response.send(JSON.stringify(result));
