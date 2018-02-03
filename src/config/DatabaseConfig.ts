@@ -3,6 +3,8 @@ import { FileLogger } from "./../logging/FileLogger";
 import { productionAppConfig } from "./AppConfig";
 import { Logger } from "../logging/Logger";
 import { ConsoleLogger } from "../logging/ConsoleLogger";
+import { Migration } from "../database/Migration";
+import { TestMigration } from "../database/migrations/TestMigration";
 
 
 /**
@@ -43,6 +45,15 @@ export class DatabaseConfig {
      * If true, database gets wiped on startup. CAUTION NEVER EVER USE IN PRODUCTION!!!
      */
     public clear: boolean = true;
+
+    /**
+     * Name of the migrations table.
+     */
+    public migrationsTable: string = "migrations";
+
+    public migrations: Migration[] = [
+        new TestMigration(),
+    ];
 }
 
 /**

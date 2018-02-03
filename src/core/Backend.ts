@@ -5,6 +5,7 @@ import { Express, Request, Response } from "express";
 import * as express from "express";
 import * as cookieParser from "cookie-parser";
 import * as bodyParser from "body-parser";
+import { Database } from "../database/Database";
 
 /**
  * The Backend class holds all references to all modules of the backend application and is
@@ -42,6 +43,9 @@ export class Backend {
      */
     private modulesLoaded: number = 0;
 
+    /**
+     * Exrpess instance.
+     */
     private express: Express;
 
     private constructor() { }
@@ -52,8 +56,14 @@ export class Backend {
     public init(): void {
         config.app.logger.log(LogLevel.INFO, "Backend is running in " + config.environment + " mode.");
         config.app.logger.log(LogLevel.INFO, "Starting initialization...");
-        this.initExpress();
-        this.loadAllModules();
+        Database.getInstance().init()
+            .then(() => {
+                this.initExpress();
+                this.loadAllModules();
+            })
+            .catch(() => {
+                config.app.logger.log(LogLevel.INFO, "Database could not be initialized. Shuting down...");
+            });
     }
 
     private loadAllModules(): void {
@@ -77,7 +87,7 @@ export class Backend {
     }
 
     private initExpress(): void {
-        config.app.logger.log(LogLevel.INFO, "Init Express...");
+        config.app.logger.log(LogLevel.INFO, "Initializing Express...");
         this.express = express();
         this.express.use(cookieParser());
         this.express.use(bodyParser.json());
@@ -89,8 +99,19 @@ export class Backend {
                 config.app.logger.log(LogLevel.ERROR, error);
             } else {
                 config.app.logger.log(LogLevel.INFO, `Server is listening on ${config.app.port}`);
-                this.express.get("/test", (request: Request, response: Response) => {
-                    response.send({ message: "Hello World!"});
+                this.express.get("/users", (request: Request, response: Response) => {
+                    Database.getInstance().getModel("users").all().then((result) => {
+                        response.send(JSON.stringify(result));
+                    }).catch(() => {
+                        response.send("{}");
+                    });
+                });
+                this.express.get("/migrations", (request: Request, response: Response) => {
+                    Database.getInstance().getModel("migrations").all().then((result) => {
+                        response.send(JSON.stringify(result));
+                    }).catch(() => {
+                        response.send("{}");
+                    });
                 });
             }
         });
