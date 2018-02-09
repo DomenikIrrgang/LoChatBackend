@@ -97,35 +97,44 @@ export class MigrationHandler {
         }
         return new Promise<void>((resolve, reject) => {
             this.migrationsModel.count({ where: { name: this.migrations[this.migrationsDone].getName() } }).then((count: number) => {
-                if (count === 0 && (!(!this.migrations[this.migrationsDone].isProduction() && config.environment === "production"))) {
-                    config.database.logger.log(LogLevel.INFO, "Running migration: " + this.migrations[this.migrationsDone].getName());
-                    this.migrations[this.migrationsDone].migrate()
-                        .then(() => {
-                            this.migrationsModel.create({ name: this.migrations[this.migrationsDone++].getName() }).then(() => {
-                                this.runMigrations().then(() => {
-                                    resolve();
+                if (count === 0) {
+                    if (config.environment !== "production" ||
+                    (this.migrations[this.migrationsDone].isProduction() && config.environment === "production")) {
+                        config.database.logger.log(LogLevel.INFO, "Running migration: " + this.migrations[this.migrationsDone].getName());
+                        this.migrations[this.migrationsDone].migrate()
+                            .then(() => {
+                                this.migrationsModel.create({ name: this.migrations[this.migrationsDone++].getName() }).then(() => {
+                                    this.runMigrations().then(() => {
+                                        resolve();
+                                    }).catch(reject);
                                 }).catch(reject);
-                            }).catch(reject);
-                        })
-                        .catch((reason) => {
-                            config.database.logger.log(
-                                LogLevel.ERROR, "Migration: " + this.migrations[this.migrationsDone].getName() + " failed.");
-                            if (reason) {
+                            })
+                            .catch((reason) => {
                                 config.database.logger.log(
-                                    LogLevel.ERROR, "Reason: " + reason.toString());
-                            }
-                            reject();
-                        });
+                                    LogLevel.ERROR, "Migration: " + this.migrations[this.migrationsDone].getName() + " failed.");
+                                if (reason) {
+                                    config.database.logger.log(
+                                        LogLevel.ERROR, "Reason: " + reason.toString());
+                                }
+                                reject();
+                            });
+                    } else {
+                        this.skipMigration(resolve, reject);
+                    }
                 } else {
-                    config.database.logger.log(LogLevel.INFO, "Skipping migration: " + this.migrations[this.migrationsDone].getName());
-                    this.migrationsDone++;
-                    this.runMigrations().then(() => {
-                        resolve();
-                    }).catch(() => {
-                        reject();
-                    });
+                    this.skipMigration(resolve, reject);
                 }
             });
+        });
+    }
+
+    private skipMigration(resolve, reject): void {
+        config.database.logger.log(LogLevel.INFO, "Skipping migration: " + this.migrations[this.migrationsDone].getName());
+        this.migrationsDone++;
+        this.runMigrations().then(() => {
+            resolve();
+        }).catch(() => {
+            reject();
         });
     }
 
