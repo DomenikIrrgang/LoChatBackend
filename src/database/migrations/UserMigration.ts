@@ -29,7 +29,7 @@ export class UserMigration extends Migration {
                         },
                     ],
                 });
-            user.sync().catch(reject);
+            user.sync().then(() => { resolve(); }).catch(reject);
         });
     }
 
