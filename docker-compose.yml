@@ -16,6 +16,8 @@ services:
       - postgres
     links:
       - postgres
+    volumes:
+      - ./logs:./logs
   postgres:
     image: postgres
     restart: always

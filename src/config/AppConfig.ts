@@ -46,8 +46,8 @@ devAppConfig.logger.setLogLevel(LogLevel.DEBUG);
  * Production Appconfig.
  */
 export let productionAppConfig: AppConfig = new AppConfig();
-productionAppConfig.logger.setLogLevel(LogLevel.INFO);
 productionAppConfig.logger = new FileLogger("applog", "applog");
+productionAppConfig.logger.setLogLevel(LogLevel.INFO);
 
 /**
  * Test Appconfig.
