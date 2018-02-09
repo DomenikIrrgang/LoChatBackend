@@ -9,6 +9,5 @@ COPY . .
 RUN tsc
 RUN mkdir docs
 RUN typedoc --mode modules --out ./docs ./src
-RUN mkdir logs
 EXPOSE 8080
 CMD ["npm", "start"]
