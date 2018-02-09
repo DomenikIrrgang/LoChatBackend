@@ -17,7 +17,7 @@ services:
     links:
       - postgres
     volumes:
-      - ./logs:./logs
+      - ./logs:/use/src/lochatbackend/logs
   postgres:
     image: postgres
     restart: always
