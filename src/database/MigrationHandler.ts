@@ -43,7 +43,7 @@ export class MigrationHandler {
 
     /**
      * Creates a new MigrationHandler with the migrations it should execute.
-     * 
+     *
      * @param migrations Migrations that should be run.
      */
     public constructor(private migrations: Migration[]) { }
@@ -71,7 +71,7 @@ export class MigrationHandler {
 
     /**
      * Runs all migrations.
-     * 
+     *
      * @returns Promise that resolves once all migrations have been run.
      */
     public run(): Promise<void> {

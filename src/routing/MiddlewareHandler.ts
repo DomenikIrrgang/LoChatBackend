@@ -24,7 +24,7 @@ export class MiddlewareHandler {
 
     /**
      * Execute all middlewares of the route. Resolves if all middlewares passed, else rejects.
-     * 
+     *
      * @param request Incoming request of the route.
      * @param response Outgoing response.
      */

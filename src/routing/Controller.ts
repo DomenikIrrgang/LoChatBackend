@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 
 /**
  * Represents the endpoint of a request. Corelogic like send a JSON response for an API should be handled here.
- * 
+ *
  * @author Domenik Irrgang
  * @version 1.0
  */

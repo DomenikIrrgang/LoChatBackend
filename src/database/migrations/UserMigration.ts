@@ -3,7 +3,7 @@ import { Database } from "../Database";
 import * as Sequelize from "sequelize";
 
 /**
- * Testing migration.
+ * Define User model in database.
  *
  * @author Domenik Irrgang
  * @version 1.0
@@ -11,27 +11,25 @@ import * as Sequelize from "sequelize";
 export class UserMigration extends Migration {
 
     public constructor() {
-        super("UserMigration", false);
+        super("UserMigration09022018_1448", false);
     }
 
     public migrate(): Promise<void> {
         return new Promise<void>((resolve, reject) => {
             let user = Database.getInstance().getConnection().define("user", {
                 name: Sequelize.STRING,
-                age: Sequelize.INTEGER,
+                authToken: Sequelize.STRING,
+                phoneNumber: Sequelize.STRING,
+                birthday: Sequelize.DATE,
             }, {
                     indexes: [
                         {
                             unique: true,
-                            fields: ["name"],
+                            fields: ["name", "phoneNumber"],
                         },
                     ],
                 });
-            user.sync({ alter: true }).then(() => {
-                user.create({ name: "Suu", age: 10 }).then(() => {
-                    resolve();
-                }).catch(reject);
-            }).catch(reject);
+            user.sync().catch(reject);
         });
     }
 
