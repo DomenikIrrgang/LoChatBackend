@@ -71,8 +71,8 @@ export let devDatabaseConfig: DatabaseConfig = new DatabaseConfig();
  * Production Databaseconfig;
  */
 export let productionDatabaseConfig: DatabaseConfig = new DatabaseConfig();
-productionAppConfig.logger = new FileLogger("databaselog", "databaselog");
-productionAppConfig.logger.setLogLevel(LogLevel.INFO);
+productionDatabaseConfig.logger = new FileLogger("databaselog", "databaselog");
+productionDatabaseConfig.logger.setLogLevel(LogLevel.INFO);
 productionDatabaseConfig.clear = false;
 
 if (process.env.DB_PASSWORD) {
