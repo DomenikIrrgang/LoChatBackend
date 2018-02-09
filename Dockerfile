@@ -1,5 +1,5 @@
 FROM node:carbon
-WORKDIR /usr/src/LoChatBackend
+WORKDIR /usr/src/lochatbackend
 COPY package*.json ./
 COPY tsconfig.json ./
 RUN npm install
@@ -9,5 +9,6 @@ COPY . .
 RUN tsc
 RUN mkdir docs
 RUN typedoc --mode modules --out ./docs ./src
+RUN mkdir logs
 EXPOSE 8080
 CMD ["npm", "start"]
