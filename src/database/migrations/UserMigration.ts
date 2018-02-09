@@ -11,7 +11,7 @@ import * as Sequelize from "sequelize";
 export class UserMigration extends Migration {
 
     public constructor() {
-        super("UserMigration09022018_1448", false);
+        super("UserMigration09022018_1448", true);
     }
 
     public migrate(): Promise<void> {
