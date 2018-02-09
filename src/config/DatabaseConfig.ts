@@ -1,6 +1,5 @@
 import { LogLevel } from "./../logging/LogLevel";
 import { FileLogger } from "./../logging/FileLogger";
-import { productionAppConfig } from "./AppConfig";
 import { Logger } from "../logging/Logger";
 import { ConsoleLogger } from "../logging/ConsoleLogger";
 import { Migration } from "../database/Migration";
