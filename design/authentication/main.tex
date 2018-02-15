@@ -1,0 +1,114 @@
+\documentclass[12pt,a4]{article}
+\usepackage{a4wide}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[pdftex]{graphicx}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{eurosym}
+\usepackage{booktabs}
+\usepackage{textcomp}
+\usepackage{hyperref}
+\usepackage{pdfpages}
+\usepackage{pdflscape}
+\usepackage{wrapfig}
+\usepackage{eurosym}
+\usepackage{float}
+\usepackage{svg}
+\usepackage{titlesec}
+\usepackage{listings}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy} %eigener Seitenstil
+\fancyhf{} %alle Kopf- und Fußzeilenfelder bereinigen
+\fancyhead[L]{\slshape\nouppercase{\leftmark}} %Kopfzeile links
+\fancyhead[C]{} %zentrierte Kopfzeile
+%\fancyhead[R]{\includegraphics[trim=0cm 0.4cm 0cm 0cm, width=3cm]{herbalife_logo}} %Kopfzeile rechts
+\renewcommand{\headrulewidth}{0.4pt} %obere Trennlinie
+%\fancyfoot[L]{\small\textit{Marius Freyer, Julia Mödinger, Nils Nieuwenhuis, Thilo Ritzerfeld \& Niklas Schwerin }}
+\fancyfoot[C]{\small{\thepage}} %Seitennummer
+\renewcommand{\footrulewidth}{0.4pt} %untere Trennlinie
+
+\usepackage[font={small,it}]{caption}
+\setlength{\parindent}{0pt}
+\setlength{\aboverulesep}{0pt}
+\setlength{\belowrulesep}{0pt}
+\renewcommand*{\arraystretch}{1.2}% → gute LaTeX-Einführung
+\linespread{1.3}
+
+\setcounter{secnumdepth}{4}
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+\renewcommand\familydefault{\sfdefault}
+
+\begin{document}
+
+\begin{titlepage}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+
+\center % Center everything on the page
+
+%\begin{center}
+%\includegraphics[width=0.7\linewidth]{zalando-se}
+%\end{center}
+
+\vspace{10cm}
+ 
+%----------------------------------------------------------------------------------------
+%	HEADING SECTIONS
+%----------------------------------------------------------------------------------------
+
+{\Huge LoChat}\\[2.5cm] % Name of your university/college
+{\Large Backend Documentation}\\[3.5cm] % Major heading such as course name
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\HRule \\[0.6cm]
+{ \huge \bfseries Authentication Proccess}\\[0.2cm] % Title of your document
+\HRule \\[3.5cm]
+
+
+%----------------------------------------------------------------------------------------
+%	DATE SECTION
+%----------------------------------------------------------------------------------------
+
+{\large Domenik Irrgang \\ \today}\\[4cm] % Date, change the \today to a set date if you want to be precise
+%----------------------------------------------------------------------------------------
+%	LOGO SECTION
+%----------------------------------------------------------------------------------------
+
+%\includegraphics{Logo}\\[1cm] % Include a department/university logo - this will require the graphicx package
+ 
+%----------------------------------------------------------------------------------------
+
+\vfill % Fill the rest of the page with whitespace
+
+\end{titlepage}
+\pagenumbering{gobble} 
+\pagestyle{plain}
+
+%\include{./content/preface}
+\include{./summary}
+\tableofcontents
+\newpage
+\pagenumbering{roman} 
+\listoffigures
+\addcontentsline{toc}{section}{List of figures}
+\newpage
+
+
+\pagenumbering{arabic} 
+\pagestyle{fancyplain}
+\setcounter{page}{1}
+
+\include{./introduction}
+\include{./workflow}
+\include{./details}
+
+
+\end{document}\textbf{}

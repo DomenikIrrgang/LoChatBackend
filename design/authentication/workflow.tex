@@ -1,0 +1,12 @@
+\section{Workflow} % Main chapter title
+This section is going to describe how the authentication process in the users point of view takes place.
+\label{Workflow} % For referencing the chapter elsewhere, use \ref{Chapter1} 
+
+\subsection{First Time Authorization}
+The user has just downloaded the application on his device and is now asked to enter some personal information (gender, year of birth). Once that is done he clicks the register button. He now receives a SMS on his device and is prompted to enter the code in the SMS to the application (will be processed automatically by the application if the application has the rights to read SMS). Now is authorized and can use the application.
+
+\subsection{Changing Device}
+When changing the device the same process of the "First Time Authorization" is done with the difference that the user does not need to enter the personal information anymore and instead skips that, because he already has an existing account.
+
+\subsection{Using Device with no SIM card}
+If now SIM card is present during the authorization process, the application will ask for a phone number. As the SMS can not be received on that device the code contained in the SMS needs to be entered manually and will be received on the device with the SIM card of the given phone number.
